@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mt-3">Sterbestatistik</h2>
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Todesursache</th>
+            <th>Anzahl</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cause, count in statistics %}
+        <tr>
+            <td>{{ cause }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

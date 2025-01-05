@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mt-3">Neuer Patient</h2>
+<form action="/patients" method="post" class="mt-4">
+    <div class="mb-3">
+        <label for="first_name" class="form-label">Vorname</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" required>
+    </div>
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Nachname</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" required>
+    </div>
+    <div class="mb-3">
+        <label for="birth_date" class="form-label">Geburtsdatum</label>
+        <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Adresse</label>
+        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="gender" class="form-label">Geschlecht</label>
+        <select class="form-select" id="gender" name="gender" required>
+            <option value="male">Männlich</option>
+            <option value="female">Weiblich</option>
+            <option value="other">Anderes</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Patient speichern</button>
+</form>
+{% endblock %}

@@ -1,0 +1,4 @@
+erstelle ein python flask webanwendung (debug disable, port=5000) für die patientenverwaltung auf einem fhir server unter https://hapifhir4ako.duckdns.org/fhir.
+folgende funktionen: patient speichern (vorname, nachname, geburtsdatum, adresse, geschlecht). patienten in einer liste anzeigen. über die liste können conditions in einem modal fenster erfasst werden. bei auwahl eines patienten in der liste werden die patientendaten und die condition angezeigt. conditions können gelöscht werden.
+erstelle die anwendung im responsive design mit bootstrap css. erstelle einen header mit überschrift und ein menu auf der linken seite für "neuer patient" und "patientenliste". flash meldungen anzeigen. 
+zippe die dateien app.py und html-files im unterverzeichnis "templates" für download um einer python umgebung auszuführen. der dateiname der zip-date ist nur der aktuelle timestamp.

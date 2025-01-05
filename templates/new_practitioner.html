@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Neuer Practitioner{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Neuer Practitioner</h2>
+    <form action="{{ url_for('create_practitioner') }}" method="post">
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Vorname</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Nachname</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Geschlecht</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="male">Männlich</option>
+                <option value="female">Weiblich</option>
+                <option value="other">Andere</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </form>
+</div>
+{% endblock %}
