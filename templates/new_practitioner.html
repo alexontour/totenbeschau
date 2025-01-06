@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Neuer Practitioner{% endblock %}
+{% block title %}Neuer Arzt{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Neuer Practitioner</h2>
+    <h2>Neuer Arzt</h2>
     <form action="{{ url_for('create_practitioner') }}" method="post">
         <div class="mb-3">
             <label for="first_name" class="form-label">Vorname</label>

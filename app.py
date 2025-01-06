@@ -16,7 +16,21 @@ def index():
 
 @app.route('/new_patient')
 def new_patient():
-    return render_template('new_patient.html')
+    # Fetch practitioners from the FHIR server
+    response = requests.get(f"{FHIR_SERVER_URL}/Practitioner")
+    practitioners = []
+    if response.status_code == 200:
+        practitioner_entries = response.json().get('entry', [])
+        for entry in practitioner_entries:
+            practitioner = entry['resource']
+            name = practitioner.get('name', [{}])[0]
+            full_name = f"{name.get('given', [''])[0]} {name.get('family', '')}"
+            practitioners.append({
+                'id': practitioner['id'],
+                'name': full_name
+            })
+    return render_template('new_patient.html', practitioners=practitioners)
+
 
 @app.route('/patient_list')
 def patient_list():
@@ -59,6 +73,7 @@ def patient_list():
 @app.route('/patients', methods=['POST'])
 def create_patient():
     data = request.form
+    practitioner_id = data['practitioner']
     patient_resource = {
         "resourceType": "Patient",
         "name": [
@@ -103,7 +118,7 @@ def create_patient():
             "performer": [
                 {
                     "actor": {
-                        "reference": "Practitioner/17",
+                        "reference": f"Practitioner/{practitioner_id}",
                         "display": "Totenbeschauarzt"
                     }
                 }
@@ -122,33 +137,6 @@ def create_patient():
     return redirect(url_for('patient_list'))
 
 
-'''
-@app.route('/patients', methods=['POST'])
-def create_patient():
-    data = request.form
-    patient_resource = {
-        "resourceType": "Patient",
-        "name": [
-            {
-                "given": [data['first_name']],
-                "family": data['last_name']
-            }
-        ],
-        "gender": data['gender'],
-        "birthDate": data['birth_date'],
-        "address": [
-            {
-                "text": data['address']
-            }
-        ]
-    }
-    response = requests.post(f"{FHIR_SERVER_URL}/Patient", json=patient_resource)
-    if response.status_code == 201:
-        flash('Patient created successfully', 'success')
-        return redirect(url_for('patient_list'))
-    flash('Error creating patient', 'danger')
-    return redirect(url_for('new_patient'))
-'''
 @app.route('/conditions/<patient_id>', methods=['GET'])
 def get_conditions(patient_id):
     response = requests.get(f"{FHIR_SERVER_URL}/Condition?patient={patient_id}")
@@ -191,7 +179,7 @@ def delete_condition(condition_id):
 @app.route('/todesursachen/<patient_id>', methods=['GET', 'POST'])
 def manage_todesursachen(patient_id):
     # Fetch the ValueSet for Todesursachen
-    valueset_response = requests.get(f"{FHIR_SERVER_URL}/ValueSet/11")
+    valueset_response = requests.get(f"{FHIR_SERVER_URL}/ValueSet/1")
     valueset = []
     if valueset_response.status_code == 200:
         valueset = valueset_response.json().get('compose', {}).get('include', [])[0].get('concept', [])

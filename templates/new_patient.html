@@ -27,6 +27,14 @@
             <option value="other">Anderes</option>
         </select>
     </div>
+    <div class="mb-3">
+        <label for="practitioner" class="form-label">Behandelnder Arzt</label>
+        <select class="form-select" id="practitioner" name="practitioner" required>
+            {% for practitioner in practitioners %}
+                <option value="{{ practitioner.id }}">{{ practitioner.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Patient speichern</button>
 </form>
 {% endblock %}
